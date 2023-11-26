@@ -1,5 +1,6 @@
 from ParserMPUtimetable import *
 
+
 for value in get_hash&group():
     group = value[0]
     hashh = value[1]
