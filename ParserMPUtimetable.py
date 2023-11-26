@@ -1,7 +1,7 @@
 import requests
 import configparser
 import random, string
-from db import *
+from DBMPU import *
 
 
 config = configparser.ConfigParser()  # создаём объекта парсера
@@ -98,7 +98,7 @@ def lessons_schedule(json_data, group):
 
             full_file_path = file_path + group + '.ics'
             link = config["file"]["output_link"] + group + ".ics"
-            getLink(group, link, hashlib.sha256(json.dumps(json_data).encode()).hexdigest(), full_file_path)
+            addLink(group, link, hashlib.sha256(json.dumps(json_data).encode()).hexdigest(), full_file_path)
 
         return (1, link)
     except Exception as e:

@@ -1,9 +1,9 @@
 from ParserMPUtimetable import *
-from db import *
+from DBMPU import *
 
 def giveLink(group):
     """Это функция предназначена для возврата ссылки на файл ics для даннной группы"""
-    link = getLinkDB(group)
+    link = giveLinkDB(group)
     if link[0] == 0:
         link = timetableParser(group)
         if link[0] == 4: return (1, )
