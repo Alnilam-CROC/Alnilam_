@@ -21,7 +21,7 @@ def Group(message):
     text=message.text
     if giveLink(text)[0]==5:
         bot.send_message(message.chat.id, giveLink(text)[1])
-        document = open('инстукция_по_подключению_ссылки_в_google_calendar.pdf', 'rb')
+        document = open('Instruction_for_inserting_the_link.pdf', 'rb')
         bot.send_message(message.chat.id, 'В инструкции Вы найдёте, как подключить файл к google calendar')
         bot.send_document(message.chat.id,document)
         bot.send_message(v_id, user_id)
