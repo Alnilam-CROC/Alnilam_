@@ -1,6 +1,9 @@
 import requests
 import configparser
 import random, string
+from db import *
+
+
 config = configparser.ConfigParser()  # создаём объекта парсера
 config.read("configfileMPU.ini")
 
@@ -24,16 +27,14 @@ def getJSON(group):
 
     try:
         data = response.json()
+
     except json.JSONDecodeError:
         return (2,)
     return (1, data)
 
 
 import json
-
-
-
-
+import hashlib
 
 lesson_time = json.loads(config["schedule"]["timetable"])
 import datetime
@@ -64,10 +65,9 @@ def lessons_schedule(json_data, group):
                             location = lesson["location"]
                             place = lesson["auditories"][0]["title"]
                             type_lesson = lesson["type"]
-                            if "href" in place: place = place[place.find("https") : place.find('target') - 2]
+                            if "href" in place: place = place[place.find("https"): place.find('target') - 2]
 
                             event = Event()
-
 
                             df = datetime.datetime.strptime(lesson["df"], '%Y-%m-%d')
                             if df.weekday() <= int(week_day) - 1:
@@ -76,12 +76,16 @@ def lessons_schedule(json_data, group):
                                 inc_date = 7 - df.weekday() - 1 + int(week_day)
 
                             dt = datetime.datetime.strptime(lesson["dt"], '%Y-%m-%d')
-                            event['uid'] = "20230901T" + lesson_time[lesson_number][0] + "/" + str(week_day) + ''.join(random.choice(string.ascii_lowercase) for i in range(5))
+                            event['uid'] = "20230901T" + lesson_time[lesson_number][0] + "/" + str(week_day) + ''.join(
+                                random.choice(string.ascii_lowercase) for i in range(5))
                             event.add('summary', vText(lesson_name, encoding='utf-8'))
-                            dtstart = (df + datetime.timedelta(days = inc_date)).replace(hour = int(lesson_time[lesson_number][0][0:2]), minute = int(lesson_time[lesson_number][0][2:4]))
+                            dtstart = (df + datetime.timedelta(days=inc_date)).replace(
+                                hour=int(lesson_time[lesson_number][0][0:2]),
+                                minute=int(lesson_time[lesson_number][0][2:4]))
 
                             event.add('dtstart', dtstart)
-                            event.add('dtend', dtstart.replace(hour = int(lesson_time[lesson_number][1][0:2]), minute = int(lesson_time[lesson_number][1][2:4])))
+                            event.add('dtend', dtstart.replace(hour=int(lesson_time[lesson_number][1][0:2]),
+                                                               minute=int(lesson_time[lesson_number][1][2:4])))
                             event.add('rrule', {'freq': 'weekly', "interval": 1, 'until': dt})
                             event.add('location', vText(location + " " + place, encoding='utf-8'))
                             event.add('description', vText(type_lesson + "; " + teacher, encoding='utf-8'))
@@ -93,17 +97,23 @@ def lessons_schedule(json_data, group):
             f.write(cal.to_ical())
             f.close()
 
-        return (1, "some_link")
-    except:
-       return (2,)
+            full_file_path = file_path + group + '.ics'
+            link = config["file"]["output_link"] + group + ".ics"
+            getLink(group, link, hashlib.sha256(json.dumps(json_data).encode()).hexdigest(), full_file_path)
+
+        return (1, link)
+    except Exception as e:
+        return (2, e)
+
 
 # data = getJSON("211-361")
 # print(lessons_schedule(data, "211-361"))
 
 def timetableParser(group):
     data = getJSON(group)
+
     # print("json", data[0])
-    # print(data)
+
     if data[0] != 1:
         return data
     # print(lessons_schedule(data[1], group))
