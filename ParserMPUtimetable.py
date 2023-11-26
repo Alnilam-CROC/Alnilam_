@@ -30,7 +30,7 @@ def getJSON(group):
 
     except json.JSONDecodeError:
         return (2,)
-    return (1, data)
+    return (1, data, hashlib.sha256(json.dumps(data).encode()).hexdigest())
 
 
 import json
@@ -44,7 +44,6 @@ from icalendar import Calendar, Event, vText
 def lessons_schedule(json_data, group):
     if json_data is None or type(json_data) != dict:
         return (5,)
-
     try:
         if "grid" in json_data:
             cal = Calendar()
