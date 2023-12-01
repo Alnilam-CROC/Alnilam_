@@ -58,3 +58,14 @@ def giveLinkDB(group_n: str):
     finally:
         con.commit()
         con.close()
+
+def  deleteGroup(group_n:str):
+    try:
+        con = sqlite3.connect("dbMPUtimetable.db")
+        cursor = con.cursor()
+        cursor.execute('DELETE FROM timetable  WHERE  group_n=(?)', (group_n,))
+    except (sqlite3.Error, sqlite3.Warning) as err:
+        return (2,)
+    finally:
+        con.commit()
+        con.close()

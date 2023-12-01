@@ -6,4 +6,5 @@ if get_hashgroup()[0] == 4:
         hashh = value[1]
         json_data = getJSON(group)
         if json_data[2] != hashh:
+            deleteGroup(group)
             lessons_schedule(json_data, group)
