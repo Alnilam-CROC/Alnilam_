@@ -27,8 +27,6 @@ def get_hashgroup():
         con.commit()
         con.close()
     
-    
-
 
 
 def addLink(group_n: str, link: str,hash_json: str, file_path: str):
