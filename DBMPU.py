@@ -19,8 +19,8 @@ def get_hashgroup():
         con = sqlite3.connect("dbMPUtimetable.db")
         cursor = con.cursor()
         cursor.execute('SELECT group_n, hash_json FROM timetable')
-        rec=cursor.fetchall()
-        return (4,rec)
+        rec = cursor.fetchall()
+        return (4, rec)
     except (sqlite3.Error, sqlite3.Warning) as err:
         return (2,)
     finally:
