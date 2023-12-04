@@ -20,10 +20,10 @@ def Group(message):
     user_id = message.from_user.id
     text=message.text
     if giveLink(text)[0]==5:
-        bot.send_message(message.chat.id, giveLink(text)[1])
+        bot.send_message(message.chat.id, "`" + giveLink(text)[1] + "`")
         document = open('Instruction_for_inserting_the_link.pdf', 'rb')
         bot.send_message(message.chat.id, 'В инструкции Вы найдёте, как подключить файл к google calendar')
-        bot.send_document(message.chat.id,document)
+        bot.send_document(message.chat.id, document)
         bot.send_message(v_id, user_id)
     elif giveLink(text)[0]==3:
         bot.send_message(message.chat.id,'Сайт политеха не доступен, попробуйте ввести номер  группы  еще раз')
