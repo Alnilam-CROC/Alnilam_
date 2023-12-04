@@ -86,7 +86,7 @@ def lessons_schedule(json_data, group):
                             event.add('dtend', dtstart.replace(hour=int(lesson_time[lesson_number][1][0:2]),
                                                                minute=int(lesson_time[lesson_number][1][2:4])))
                             event.add('rrule', {'freq': 'weekly', "interval": 1, 'until': dt})
-                            event.add('location', vText(location + " " + place, encoding='utf-8'))
+                            event.add('location', vText(place + " " + location , encoding='utf-8'))
                             event.add('description', vText(type_lesson + "; " + teacher, encoding='utf-8'))
                             cal.add_component(event)
 
