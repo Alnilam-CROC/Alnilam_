@@ -20,7 +20,7 @@ def Group(message):
     user_id = message.from_user.id
     text=message.text
     if giveLink(text)[0]==5:
-        bot.send_message(message.chat.id, "`" + giveLink(text)[1] + "`")
+        bot.send_message(message.chat.id, "`" + giveLink(text)[1] + "`", parse_mode="MarkdownV2")
         document = open('Instruction_for_inserting_the_link.pdf', 'rb')
         bot.send_message(message.chat.id, 'В инструкции Вы найдёте, как подключить файл к google calendar')
         bot.send_document(message.chat.id, document)
@@ -31,7 +31,7 @@ def Group(message):
          bot.send_message(message.chat.id,'Введенной вами группы не существует, проверьте название группы на сайте политеха' )
     else:
         bot.send_message(message.chat.id,'Произошла ошибка при получении ссылки, попробуйте еще раз или обратитесь в поддержку ')
-    bot.send_document(message.chat.id,"В случае возникновения технических шоколадок писать @VarvaraKh")
+    bot.send_message(message.chat.id,"В случае возникновения технических шоколадок писать @VarvaraKh")
 
 
 
