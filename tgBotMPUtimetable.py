@@ -2,7 +2,7 @@ import telebot
 from C1 import *
 
 
-token='6406936841:AAE0K6Tn7MHNDHRkexecSB4a-66dpTNRoHQ'
+token='6768094979:AAHNKC8hCelOozOQ13KC87f5Ky02OtU-Mxg'
 bot=telebot.TeleBot(token)
 @bot.message_handler(commands=['start'])
 def start_message(message):
